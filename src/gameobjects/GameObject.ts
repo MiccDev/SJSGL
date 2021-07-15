@@ -1,74 +1,37 @@
-import ImageLoader from "../gfx/ImageLoader";
-import Texture from "../gfx/Texture";
-import { generateId } from "../utils/Functions";
+import ImageLoader from '../gfx/ImageLoader';
+import Texture from '../gfx/Texture';
+import Component from './Component';
 
-class GameObjectFunctions extends ImageLoader {
+export class _GameObject {
+	children: GameObject[];
 
-    private children: GameObject[];
-    private texture: Texture;
-    
-    constructor() {
-        super();
-        this.children = [];
-        this.texture = null!;
-    }
+	constructor() {
+		this.children = [];
+	}
 
-    addChild(gameObject: GameObject): void {
-        this.children.push(gameObject);
-    }
+	addChild(child: GameObject): void {
+		this.children.push(child);
+	}
 
-    addChildren(gameObjectList: GameObject[]): void {
-        gameObjectList.forEach(child => {
-            this.children.push(child);
-        }, this);
-    }
-
-    removeChild(gameObject: GameObject): void {
-        var index = this.children.indexOf(gameObject);
-        this.children.splice(index, 1);
-    }
-
-    getChild(index: number): GameObject {
-        return this.children[index];
-    }
-
-    getChildren(): GameObject[] {
-        return this.children;
-    }
-
-    setTexture(texture: Texture): void {
-        this.texture = texture;
-    }
-
-    getTexture(): Texture {
-        return this.texture;
-    }
-
+	removeChild(id: string) {
+		for (let i = 0; i < this.children.length; i++) {
+			if (this.children[i].id == id) {
+				this.children.splice(i, 1);
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
-class GameObject extends GameObjectFunctions {
-
-    private parent: GameObject;
-
-    public id: string;
-
-    constructor() {
-        super();
-        this.id = generateId();
-        this.parent = null!;
-    }
-
-    getParent(): GameObject {
-        return this.parent;
-    }
-
-    setParent(parent: GameObject): void {
-        this.parent = parent;
-    }
-
-}
-
-export {
-    GameObject,
-    GameObjectFunctions
+export class GameObject extends _GameObject {
+	id: string;
+	parent: GameObject | _GameObject;
+	components: Component[];
+	constructor(parent: GameObject | _GameObject) {
+		super();
+		this.id = Math.random().toString(36).substr(2, 9);
+		this.parent = parent;
+		this.components = [];
+	}
 }
