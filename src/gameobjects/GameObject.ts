@@ -1,11 +1,14 @@
+import Texture from "../gfx/Texture";
 import { generateId } from "../utils/Functions";
 
 class GameObjectFunctions {
 
     private children: GameObject[];
+    private texture: Texture;
     
     constructor() {
         this.children = [];
+        this.texture = null!;
     }
 
     addChild(gameObject: GameObject): void {
@@ -29,6 +32,14 @@ class GameObjectFunctions {
 
     getChildren(): GameObject[] {
         return this.children;
+    }
+
+    setTexture(texture: Texture): void {
+        this.texture = texture;
+    }
+
+    getTexture(): Texture {
+        return this.texture;
     }
 
 }
