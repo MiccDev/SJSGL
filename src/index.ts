@@ -1,4 +1,5 @@
 import { GameObject, GameObjectFunctions } from "./gameobjects/GameObject";
+import Input from "./input/Input";
 import Vector2 from "./utils/Vector2";
 
 class Game extends GameObjectFunctions {
@@ -8,11 +9,14 @@ class Game extends GameObjectFunctions {
 	private size: Vector2;
 	private projectTitle: string;
 
+	public input: Input;
+
 	constructor(projectTitle: string, size: Vector2) {
 		super();
 		this.projectTitle = projectTitle;
 		this.size = size;
 		this.context = this.canvas.getContext("2d")!;
+		this.input = new Input(this.canvas);
 
 		this.init();
 	}
