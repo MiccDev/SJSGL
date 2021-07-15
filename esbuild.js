@@ -2,7 +2,7 @@ const esbuild = require('esbuild');
 
 esbuild
 	.build({
-		entryPoints: ['src/Game.ts'],
+		entryPoints: ['src/index.ts'],
 		outdir: 'lib',
 		bundle: true,
 		minify: true,
