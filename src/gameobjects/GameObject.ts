@@ -1,12 +1,14 @@
+import ImageLoader from "../gfx/ImageLoader";
 import Texture from "../gfx/Texture";
 import { generateId } from "../utils/Functions";
 
-class GameObjectFunctions {
+class GameObjectFunctions extends ImageLoader {
 
     private children: GameObject[];
     private texture: Texture;
     
     constructor() {
+        super();
         this.children = [];
         this.texture = null!;
     }
