@@ -1,11 +1,7 @@
 export default class ImageLoader {
-
-    constructor() {}
-
-    loadImg(path: string): HTMLImageElement {
-        var image = new Image();
-        image.src = path;
-        return image;
-    }
-
+	static loadImg(path: string): HTMLImageElement {
+		let image = new Image();
+		image.src = path;
+		return image;
+	}
 }

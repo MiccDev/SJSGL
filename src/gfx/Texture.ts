@@ -1,40 +1,20 @@
-import Vector2 from "../utils/Vector2";
+import Vector2 from '../utils/Vector2';
 
 export default class Texture {
+	constructor(public readonly image: HTMLImageElement) {}
+	get width(): number {
+		return this.image.width;
+	}
 
-    private image: HTMLImageElement;
-    private size: Vector2;
+	set width(width: number) {
+		this.image.width = width;
+	}
 
-    constructor(image: HTMLImageElement) {
-        this.image = image;
-        this.size = new Vector2(this.image.width, this.image.height);
-    }
+	get height(): number {
+		return this.image.height;
+	}
 
-    private updateImageSize(): void {
-        this.image.width = this.size.getX();
-        this.image.height = this.size.getY();
-    }
-
-    getImage(): HTMLImageElement {
-        return this.image;
-    }
-
-    setWidth(width: number) {
-        this.size.setX(width);
-        this.updateImageSize();
-    }
-
-    setHeight(height: number) {
-        this.size.setY(height);
-        this.updateImageSize();
-    }
-
-    getWidth(): number {
-        return this.size.getX();
-    }
-
-    getHeight(): number {
-        return this.size.getY();
-    }
-
+	set height(height: number) {
+		this.image.height = height;
+	}
 }
