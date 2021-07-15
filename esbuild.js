@@ -9,6 +9,6 @@ esbuild
 		splitting: true,
 		format: 'esm',
 		target: ['esnext'],
-		watch: true,
+		watch: false,
 	})
 	.catch(() => process.exit(1));

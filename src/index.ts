@@ -1,5 +1,7 @@
 import { GameObject, GameObjectFunctions } from "./gameobjects/GameObject";
 import Input from "./input/Input";
+import KeyCode from "./input/KeyCode";
+import MouseCode from "./input/MouseCode";
 import Vector2 from "./utils/Vector2";
 
 class Game extends GameObjectFunctions {
@@ -36,5 +38,7 @@ class Game extends GameObjectFunctions {
 export {
 	Game,
 	GameObject,
-	Vector2
+	Vector2,
+	KeyCode,
+	MouseCode
 }

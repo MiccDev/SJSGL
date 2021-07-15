@@ -56,19 +56,19 @@ export default class Input {
 
     }
 
-    getKeyDown(key: KeyCode|number): boolean {
+    getKeyDown(key: KeyCode): boolean {
         return this.keys[key];
     }
 
-    getMouseDown(button: MouseCode|number): boolean {
+    getMouseDown(button: MouseCode): boolean {
         return this.mouseClick[button];
     }
 
-    getKeyUp(key: KeyCode|number): boolean {
+    getKeyUp(key: KeyCode): boolean {
         return !this.keys[key];
     }
 
-    getMouseUp(key: MouseCode|number): boolean {
+    getMouseUp(key: MouseCode): boolean {
         return !this.keys[key];
     }
 
