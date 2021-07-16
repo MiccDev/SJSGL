@@ -1,7 +1,12 @@
-import { Game } from '..';
+import {
+	Game
+} from '..';
 import Texture from '../gameobjects/components/Texture';
 import Transform from '../gameobjects/components/Transform';
-import { GameObject, _GameObject } from '../gameobjects/GameObject';
+import {
+	GameObject,
+	_GameObject
+} from '../gameobjects/GameObject';
 import Vector2 from '../utils/Vector2';
 
 export default class Renderer {
@@ -18,20 +23,19 @@ export default class Renderer {
 
 	private treeSearch(go: GameObject | _GameObject) {
 		if (!go.visible) return;
-		let texture = go.getComponent<Texture>('Texture');
+		let texture = go.getComponent < Texture > ('Texture');
 		let transform = go.transform;
 		let parent =
-			go instanceof GameObject
-				? go.parent.transform.position
-				: new Vector2(0, 0);
+			go instanceof GameObject ?
+			go.parent.transform.position :
+			new Vector2(0, 0);
 		if (texture) {
 			this.context.translate(
-				transform.position.x,
-				transform.position.y
+				transform.position.x - (transform.scale.x / 2) - (parent.x / 2),
+				transform.position.y - (transform.scale.y / 2) - (parent.y / 2)
 			);
-			if(transform.rotation) {
+			if (transform.rotation) {
 				this.context.rotate((Math.PI / 180) * transform.rotation);
-				this.context.translate(0, 0);
 			}
 			this.context.drawImage(
 				texture.image,
@@ -40,6 +44,7 @@ export default class Renderer {
 				transform.scale.x,
 				transform.scale.y
 			);
+			this.context.translate(0, 0);
 		}
 
 		go.children.forEach((node) => this.treeSearch(node));
