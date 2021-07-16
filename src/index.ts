@@ -2,7 +2,7 @@ import { GameObject, _GameObject } from './gameobjects/GameObject';
 import Input from './input/Input';
 import KeyCode from './input/KeyCode';
 import MouseCode from './input/MouseCode';
-import Vector2 from './gameobjects/components/Vector2';
+import Vector2 from './utils/Vector2';
 import Texture from './gameobjects/components/Texture';
 import ImageLoader from './gfx/ImageLoader';
 import Renderer from './render/Renderer';
@@ -53,12 +53,4 @@ class Game extends _GameObject {
 	}
 }
 
-export {
-	Game,
-	GameObject,
-	Vector2,
-	KeyCode,
-	MouseCode,
-	Texture,
-	ImageLoader
-}
+export { Game, GameObject, Vector2, KeyCode, MouseCode, Texture, ImageLoader };

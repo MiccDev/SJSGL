@@ -1,4 +1,4 @@
-import Vector2 from '../gameobjects/components/Vector2';
+import Vector2 from '../utils/Vector2';
 import KeyCode from './KeyCode';
 import MouseCode from './MouseCode';
 

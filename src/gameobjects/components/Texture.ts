@@ -1,11 +1,9 @@
 import Component from './Component';
-import Vector2 from './Vector2';
-
 export default class Texture extends Component {
 	constructor(public image: HTMLImageElement) {
-		super();
+		super('Texture');
 	}
-	
+
 	get width(): number {
 		return this.image.width;
 	}

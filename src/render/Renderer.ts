@@ -1,6 +1,8 @@
-import { Game, Texture } from "..";
-import Vector2 from "../gameobjects/components/Vector2";
-import { GameObject, _GameObject } from "../gameobjects/GameObject";
+import { Game } from '..';
+import Texture from '../gameobjects/components/Texture';
+import Transform from '../gameobjects/components/Transform';
+import { GameObject, _GameObject } from '../gameobjects/GameObject';
+import Vector2 from '../utils/Vector2';
 
 export default class Renderer {
 	constructor(private context: CanvasRenderingContext2D, private game: Game) {}
@@ -12,21 +14,22 @@ export default class Renderer {
 		this.treeSearch(this.game);
 	}
 
-	private treeSearch(go: GameObject|_GameObject) {
-		if(!go.visible) return;
-		
-		var position: Vector2 = go.components.get("Position")!;
-		var texture: Texture = go.components.get("Texture")!;
-		var scale: Vector2 = go.components.get("Scale")!;
-
-		if(go instanceof GameObject) var parentPosition = go.parent.components.get("Position");
-
-		if(texture) {
-			if(scale) this.context.drawImage(texture.image, position?.x! + parentPosition?.x!, position?.y! + parentPosition?.y!, scale?.x!, scale?.y!);
-			else this.context.drawImage(texture.image, position?.x! + (parentPosition?.x! / 2), position?.y! + (parentPosition?.y! / 2));
+	private treeSearch(go: GameObject | _GameObject) {
+		if (!go.visible) return;
+		let texture = go.getComponent<Texture>('Texture');
+		let transform = go.getComponent<Transform>('Transform');
+		let parent =
+			go instanceof GameObject
+				? go.parent.getComponent<Transform>('Transform').position
+				: new Vector2(0, 0);
+		if (texture) {
+			this.context.drawImage(
+				texture.image,
+				transform.position.x + parent.x / 2,
+				transform.position.y + parent.y / 2
+			);
 		}
 
 		go.children.forEach((node) => this.treeSearch(node));
-	};
-
+	}
 }

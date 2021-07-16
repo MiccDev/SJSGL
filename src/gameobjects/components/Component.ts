@@ -1,3 +1,3 @@
 export default class Component {
-	constructor() {}
+	constructor(public readonly name: string) {}
 }

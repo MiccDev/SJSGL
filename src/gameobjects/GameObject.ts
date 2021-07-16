@@ -1,25 +1,21 @@
 import ImageLoader from '../gfx/ImageLoader';
 import Texture from './components/Texture';
-import Vector2 from './components/Vector2';
+import Transform from './components/Transform';
 import Component from './components/Component';
+import Vector2 from '../utils/Vector2';
 
-type ComponentTypes = "Rotation" | "Position" | "Texture" | "Scale";
+type ComponentTypes = 'Texture' | 'Transform';
 
 export class _GameObject {
 	children: GameObject[];
 	visible: boolean;
-	components: Map < ComponentTypes,
-	Component > ;
+	components: Map<ComponentTypes, Texture | Transform>;
 
 	constructor() {
 		this.children = [];
 		this.visible = true;
 		this.components = new Map();
-
-		this.components.set("Position", new Vector2(0, 0)!);
-		this.components.set("Rotation", new Vector2(0, 0)!);
-		this.components.set("Scale", new Vector2(0, 0));
-		this.components.set("Texture", null!);
+		this.addComponent(new Transform(new Vector2(0, 0), 0));
 	}
 
 	addChild(child: GameObject): void {
@@ -36,14 +32,23 @@ export class _GameObject {
 		}
 		return false;
 	}
+
+	addComponent(component: Transform | Texture) {
+		if (!this.components.has(component.name as ComponentTypes)) {
+			this.components.set(component.name as ComponentTypes, component);
+		}
+	}
+
+	getComponent<T extends Transform | Texture>(name: ComponentTypes) {
+		return this.components.get(name) as T;
+	}
 }
 
 export class GameObject extends _GameObject {
 	id: string;
-	parent: GameObject | _GameObject;
+	parent!: GameObject | _GameObject;
 	constructor() {
 		super();
 		this.id = Math.random().toString(36).substr(2, 9);
-		this.parent = null!;
 	}
 }
