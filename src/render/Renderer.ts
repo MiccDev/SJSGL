@@ -1,4 +1,4 @@
-import { Game } from "..";
+import { Game, Texture } from "..";
 import Vector2 from "../gameobjects/components/Vector2";
 import { GameObject, _GameObject } from "../gameobjects/GameObject";
 
@@ -15,9 +15,9 @@ export default class Renderer {
 	private treeSearch(go: GameObject|_GameObject) {
 		if(!go.visible) return;
 		
-		var position = go.components.get("Position");
-		var texture = go.components.get("Texture");
-		var scale = go.components.get("Scale");
+		var position: Vector2 = go.components.get("Position")!;
+		var texture: Texture = go.components.get("Texture")!;
+		var scale: Vector2 = go.components.get("Scale")!;
 
 		if(go instanceof GameObject) var parentPosition = go.parent.components.get("Position");
 
