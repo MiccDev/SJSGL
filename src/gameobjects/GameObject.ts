@@ -4,18 +4,19 @@ import Transform from './components/Transform';
 import Component from './components/Component';
 import Vector2 from '../utils/Vector2';
 
-type ComponentTypes = 'Texture' | 'Transform';
+type ComponentTypes = 'Texture';
 
 export class _GameObject {
 	children: GameObject[];
 	visible: boolean;
-	components: Map<ComponentTypes, Texture | Transform>;
+	components: Map<ComponentTypes, Texture>;
+	transform: Transform;
 
 	constructor() {
 		this.children = [];
 		this.visible = true;
 		this.components = new Map();
-		this.addComponent(new Transform(new Vector2(0, 0), 0));
+		this.transform = new Transform(new Vector2(0, 0), new Vector2(0, 0), 0);
 	}
 
 	addChild(child: GameObject): void {
@@ -33,13 +34,13 @@ export class _GameObject {
 		return false;
 	}
 
-	addComponent(component: Transform | Texture) {
+	addComponent(component: Texture) {
 		if (!this.components.has(component.name as ComponentTypes)) {
 			this.components.set(component.name as ComponentTypes, component);
 		}
 	}
 
-	getComponent<T extends Transform | Texture>(name: ComponentTypes) {
+	getComponent<T extends Texture>(name: ComponentTypes) {
 		return this.components.get(name) as T;
 	}
 }

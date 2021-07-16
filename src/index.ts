@@ -6,6 +6,7 @@ import Vector2 from './utils/Vector2';
 import Texture from './gameobjects/components/Texture';
 import ImageLoader from './gfx/ImageLoader';
 import Renderer from './render/Renderer';
+import Transform from './gameobjects/components/Transform';
 
 class Game extends _GameObject {
 	private canvas: HTMLCanvasElement = document.createElement('canvas');
@@ -28,6 +29,7 @@ class Game extends _GameObject {
 		this.context = this.canvas.getContext('2d')!;
 		this.input = new Input(this.canvas);
 		this.renderer = new Renderer(this.context, this);
+		this.transform.scale = this.size;
 
 		this.init();
 	}
@@ -49,8 +51,10 @@ class Game extends _GameObject {
 		this.lastTime = time;
 		this.delta = deltaTime;
 
+		this.transform.scale = this.size;
+
 		this.renderer.render();
 	}
 }
 
-export { Game, GameObject, Vector2, KeyCode, MouseCode, Texture, ImageLoader };
+export { Game, GameObject, Vector2, KeyCode, MouseCode, Texture, ImageLoader, Transform };

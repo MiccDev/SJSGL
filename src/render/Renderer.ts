@@ -17,16 +17,18 @@ export default class Renderer {
 	private treeSearch(go: GameObject | _GameObject) {
 		if (!go.visible) return;
 		let texture = go.getComponent<Texture>('Texture');
-		let transform = go.getComponent<Transform>('Transform');
+		let transform = go.transform;
 		let parent =
 			go instanceof GameObject
-				? go.parent.getComponent<Transform>('Transform').position
+				? go.parent.transform.position
 				: new Vector2(0, 0);
 		if (texture) {
 			this.context.drawImage(
 				texture.image,
 				transform.position.x + parent.x / 2,
-				transform.position.y + parent.y / 2
+				transform.position.y + parent.y / 2,
+				transform.scale.x,
+				transform.scale.y
 			);
 		}
 
