@@ -8,13 +8,23 @@ import ImageLoader from './gfx/ImageLoader';
 import Renderer from './render/Renderer';
 import Transform from './gameobjects/components/Transform';
 
+type _Game = {
+	title: string,
+	size: Vector2,
+	update: Function,
+	fps: number
+}
+
 class Game extends _GameObject {
 	private canvas: HTMLCanvasElement = document.createElement('canvas');
 	private context: CanvasRenderingContext2D;
 	private renderer: Renderer;
 
-	private lastTime: number = performance.now() / 2;
+	private lastTime: number = new Date().getTime() / 100;
 	private fps: number = 60;
+
+	private opts: _Game;
+	private updateMethod: Function;
 
 	input: Input;
 	delta: number = 0;
@@ -22,13 +32,19 @@ class Game extends _GameObject {
 	size: Vector2;
 	projectTitle: string;
 
-	constructor(projectTitle: string, size: Vector2) {
+	constructor(opts: _Game) {
 		super();
-		this.projectTitle = projectTitle;
-		this.size = size;
+		
+		this.opts = opts;
+		this.projectTitle = opts.title;
+		this.size = opts.size;
+		this.updateMethod = opts.update;
+		this.fps = opts.fps;
+
 		this.context = this.canvas.getContext('2d')!;
 		this.input = new Input(this.canvas);
 		this.renderer = new Renderer(this.context, this);
+
 		this.transform.scale = this.size;
 
 		this.init();
@@ -46,14 +62,16 @@ class Game extends _GameObject {
 	}
 
 	private update(): void {
-		var time = performance.now() / 2;
-		var deltaTime = time - this.lastTime;
-		this.lastTime = time;
-		this.delta = deltaTime;
+		let time = new Date().getTime() / 100;
+		this.delta = time - this.lastTime;
 
 		this.transform.scale = this.size;
 
 		this.renderer.render();
+
+		this.updateMethod(this.delta);
+
+		this.lastTime = time;
 	}
 }
 
