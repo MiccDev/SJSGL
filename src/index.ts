@@ -11,6 +11,8 @@ import ImageLoader from './gfx/ImageLoader';
 import Renderer from './render/Renderer';
 import Transform from './gameobjects/components/Transform';
 import Layer from './gameobjects/components/Layer';
+import AudioLoader from './audio/AudioLoader';
+import Sound from './gameobjects/components/Sound';
 
 type _Game = {
 	title: string,
@@ -97,5 +99,7 @@ export {
 	Texture,
 	ImageLoader,
 	Transform,
-	Layer
+	Layer,
+	Sound,
+	AudioLoader
 };
