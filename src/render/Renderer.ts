@@ -7,6 +7,8 @@ import {
 	GameObject,
 	_GameObject
 } from '../gameobjects/GameObject';
+import TextUI from '../gameobjects/ui/TextUI';
+import UI from '../gameobjects/ui/UI';
 import Vector2 from '../utils/Vector2';
 
 export default class Renderer {
@@ -17,11 +19,12 @@ export default class Renderer {
 		var screenSize = this.game.size;
 		this.context.clearRect(0, 0, screenSize.x, screenSize.y);
 
-		this.treeSearch(this.game);
+		this.goTreeSearch(this.game);
+
 		this.context.restore();
 	}
 
-	private treeSearch(go: GameObject | _GameObject) {
+	private goTreeSearch(go: GameObject | _GameObject) {
 		if (!go.visible) return;
 		let texture = go.getComponent < Texture > ('Texture');
 		let transform = go.transform;
@@ -47,6 +50,6 @@ export default class Renderer {
 			this.context.translate(0, 0);
 		}
 
-		go.children.forEach((node) => this.treeSearch(node));
+		go.children.forEach((node) => this.goTreeSearch(node));
 	}
 }
