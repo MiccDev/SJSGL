@@ -7,6 +7,7 @@ import Texture from './gameobjects/components/Texture';
 import ImageLoader from './gfx/ImageLoader';
 import Renderer from './render/Renderer';
 import Transform from './gameobjects/components/Transform';
+import Layer from './gameobjects/components/Layer';
 
 type _Game = {
 	title: string,
@@ -75,4 +76,4 @@ class Game extends _GameObject {
 	}
 }
 
-export { Game, GameObject, Vector2, KeyCode, MouseCode, Texture, ImageLoader, Transform };
+export { Game, GameObject, Vector2, KeyCode, MouseCode, Texture, ImageLoader, Transform, Layer };

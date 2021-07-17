@@ -6,9 +6,10 @@
   "author": "srmdev <68980580+srmdev@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn run build:js && yarn run build:types",
+    "build": "yarn run build:js && yarn run build:types && yarn run build:jsAdd",
     "build:types": "tsc --emitDeclarationOnly --outDir lib",
-    "build:js": "rimraf lib && node ./esbuild.js"
+    "build:js": "rimraf lib && node ./esbuild.js",
+    "build:jsAdd": "node addline.js"
   },
   "devDependencies": {
     "esbuild": "^0.12.15",

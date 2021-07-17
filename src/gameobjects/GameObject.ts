@@ -3,13 +3,14 @@ import Texture from './components/Texture';
 import Transform from './components/Transform';
 import Component from './components/Component';
 import Vector2 from '../utils/Vector2';
+import Layer from './components/Layer';
 
-type ComponentTypes = 'Texture';
+type ComponentTypes = 'Texture' | 'Layer';
 
 export class _GameObject {
 	children: GameObject[];
 	visible: boolean;
-	components: Map<ComponentTypes, Texture>;
+	components: Map<ComponentTypes, Texture | Layer>;
 	transform: Transform;
 
 	constructor() {
@@ -34,13 +35,13 @@ export class _GameObject {
 		return false;
 	}
 
-	addComponent(component: Texture) {
+	addComponent(component: Texture | Layer) {
 		if (!this.components.has(component.name as ComponentTypes)) {
 			this.components.set(component.name as ComponentTypes, component);
 		}
 	}
 
-	getComponent<T extends Texture>(name: ComponentTypes) {
+	getComponent<T extends Texture | Layer>(name: ComponentTypes) {
 		return this.components.get(name) as T;
 	}
 }
