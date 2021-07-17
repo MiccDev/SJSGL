@@ -40,7 +40,7 @@ export default class Renderer {
 			this.context.drawImage(
 				texture.image,
 				(-transform.scale.x / 2) + parent.x / 2,
-				(-transform.scale.x / 2) + parent.y / 2,
+				(-transform.scale.y / 2) + parent.y / 2,
 				transform.scale.x,
 				transform.scale.y
 			);

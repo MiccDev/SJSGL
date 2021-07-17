@@ -7,7 +7,7 @@ import Layer from './components/Layer';
 
 type ComponentTypes = 'Texture' | 'Layer';
 
-export class _GameObject {
+export abstract class _GameObject {
 	children: GameObject[];
 	visible: boolean;
 	components: Map<ComponentTypes, Texture | Layer>;
@@ -44,13 +44,17 @@ export class _GameObject {
 	getComponent<T extends Texture | Layer>(name: ComponentTypes) {
 		return this.components.get(name) as T;
 	}
+
+	abstract tick(delta: number);
 }
 
-export class GameObject extends _GameObject {
+export abstract class GameObject extends _GameObject {
 	id: string;
 	parent!: GameObject | _GameObject;
 	constructor() {
 		super();
 		this.id = Math.random().toString(36).substr(2, 9);
 	}
+
+	abstract tick(delta: number);
 }

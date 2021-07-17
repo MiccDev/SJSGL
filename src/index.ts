@@ -1,4 +1,7 @@
-import { GameObject, _GameObject } from './gameobjects/GameObject';
+import {
+	GameObject,
+	_GameObject
+} from './gameobjects/GameObject';
 import Input from './input/Input';
 import KeyCode from './input/KeyCode';
 import MouseCode from './input/MouseCode';
@@ -22,7 +25,7 @@ class Game extends _GameObject {
 	private renderer: Renderer;
 
 	private lastTime: number = new Date().getTime() / 100;
-	private fps: number = 60;
+	private fps: number;
 
 	private opts: _Game;
 	private updateMethod: Function;
@@ -35,18 +38,17 @@ class Game extends _GameObject {
 
 	constructor(opts: _Game) {
 		super();
-		
+
 		this.opts = opts;
 		this.projectTitle = opts.title;
-		this.size = opts.size;
-		this.updateMethod = opts.update;
-		this.fps = opts.fps;
+		this.size = opts.size || new Vector2(500, 500);
+		this.transform.scale = this.size;
+		this.updateMethod = opts.update || null;
+		this.fps = opts.fps || 60;
 
-		this.context = this.canvas.getContext('2d')!;
+		this.context = this.canvas.getContext('2d') !;
 		this.input = new Input(this.canvas);
 		this.renderer = new Renderer(this.context, this);
-
-		this.transform.scale = this.size;
 
 		this.init();
 	}
@@ -62,6 +64,8 @@ class Game extends _GameObject {
 		setInterval(this.update.bind(this), 1000 / this.fps);
 	}
 
+	override tick(): void {}
+
 	private update(): void {
 		let time = new Date().getTime() / 100;
 		this.delta = time - this.lastTime;
@@ -69,11 +73,29 @@ class Game extends _GameObject {
 		this.transform.scale = this.size;
 
 		this.renderer.render();
+		this.treeSearch(this);
 
-		this.updateMethod(this.delta);
+		if (this.updateMethod) this.updateMethod(this.delta);
 
 		this.lastTime = time;
 	}
+
+	private treeSearch(go: GameObject | _GameObject) {
+		go.tick(this.delta);
+
+		go.children.forEach((node) => this.treeSearch(node));
+	}
+
 }
 
-export { Game, GameObject, Vector2, KeyCode, MouseCode, Texture, ImageLoader, Transform, Layer };
+export {
+	Game,
+	GameObject,
+	Vector2,
+	KeyCode,
+	MouseCode,
+	Texture,
+	ImageLoader,
+	Transform,
+	Layer
+};
