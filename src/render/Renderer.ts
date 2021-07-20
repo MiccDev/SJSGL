@@ -7,8 +7,6 @@ import {
 	GameObject,
 	_GameObject
 } from '../gameobjects/GameObject';
-import TextUI from '../gameobjects/ui/TextUI';
-import UI from '../gameobjects/ui/UI';
 import Vector2 from '../utils/Vector2';
 
 export default class Renderer {
