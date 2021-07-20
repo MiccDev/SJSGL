@@ -5,13 +5,14 @@ import Component from './components/Component';
 import Vector2 from '../utils/Vector2';
 import Layer from './components/Layer';
 import Sound from './components/Sound';
+import LineRenderer from './components/LineRenderer';
 
-type ComponentTypes = 'Texture' | 'Layer' | 'Sound';
+type ComponentTypes = 'Texture' | 'Layer' | 'Sound' | 'LineRenderer';
 
 export abstract class _GameObject {
 	children: GameObject[];
 	visible: boolean;
-	components: Map<ComponentTypes, Texture | Layer | Sound>;
+	components: Map<ComponentTypes, Texture | Layer | Sound | LineRenderer>;
 	transform: Transform;
 
 	constructor() {
@@ -36,13 +37,13 @@ export abstract class _GameObject {
 		return false;
 	}
 
-	addComponent(component: Texture | Layer | Sound) {
+	addComponent(component: Texture | Layer | Sound | LineRenderer) {
 		if (!this.components.has(component.name as ComponentTypes)) {
 			this.components.set(component.name as ComponentTypes, component);
 		}
 	}
 
-	getComponent<T extends Texture | Layer | Sound>(name: ComponentTypes) {
+	getComponent<T extends Texture | Layer | Sound | LineRenderer>(name: ComponentTypes) {
 		return this.components.get(name) as T;
 	}
 

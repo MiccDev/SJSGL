@@ -13,6 +13,8 @@ import Transform from './gameobjects/components/Transform';
 import Layer from './gameobjects/components/Layer';
 import AudioLoader from './audio/AudioLoader';
 import Sound from './gameobjects/components/Sound';
+import LineTypes from './utils/LineTypes';
+import LineRenderer from './gameobjects/components/LineRenderer';
 
 type _Game = {
 	title: string,
@@ -83,6 +85,7 @@ class Game extends _GameObject {
 	}
 
 	private treeSearch(go: GameObject | _GameObject) {
+		if(!go.tick) return;
 		go.tick(this.delta);
 
 		go.children.forEach((node) => this.treeSearch(node));
@@ -101,5 +104,7 @@ export {
 	Transform,
 	Layer,
 	Sound,
-	AudioLoader
+	AudioLoader,
+	LineRenderer,
+	LineTypes
 };

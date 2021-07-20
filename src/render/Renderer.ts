@@ -1,6 +1,7 @@
 import {
 	Game
 } from '..';
+import LineRenderer from '../gameobjects/components/LineRenderer';
 import Texture from '../gameobjects/components/Texture';
 import Transform from '../gameobjects/components/Transform';
 import {
@@ -25,6 +26,7 @@ export default class Renderer {
 	private goTreeSearch(go: GameObject | _GameObject) {
 		if (!go.visible) return;
 		let texture = go.getComponent < Texture > ('Texture');
+		let lineRenderer = go.getComponent < LineRenderer > ('LineRenderer');
 		let transform = go.transform;
 		let parent =
 			go instanceof GameObject ?
@@ -45,6 +47,18 @@ export default class Renderer {
 				transform.scale.x,
 				transform.scale.y
 			);
+			this.context.translate(0, 0);
+		}
+		if (lineRenderer) {
+			this.context.translate(
+				transform.position.x - (parent.x / 2),
+				transform.position.y - (parent.y / 2)
+			);
+			// if (lineRenderer.getRotation()) {
+			// 	this.context.rotate((Math.PI / 180) * lineRenderer.getRotation());
+			// }
+			this.context.lineWidth = lineRenderer.getWidth() || 1;
+			this.context.lineTo(transform.position.x + lineRenderer.getLength(), transform.position.y + lineRenderer.getLength());
 			this.context.translate(0, 0);
 		}
 
