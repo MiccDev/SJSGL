@@ -8,6 +8,7 @@ import {
 	GameObject,
 	_GameObject
 } from '../gameobjects/GameObject';
+import { Color } from '../utils/Color';
 import Vector2 from '../utils/Vector2';
 
 export default class Renderer {
@@ -26,7 +27,8 @@ export default class Renderer {
 	private goTreeSearch(go: GameObject | _GameObject) {
 		if (!go.visible) return;
 		let texture = go.getComponent < Texture > ('Texture');
-		let lineRenderer = go.getComponent < LineRenderer > ('LineRenderer');
+		let color = go.color;
+		// let lineRenderer = go.getComponent < LineRenderer > ('LineRenderer');
 		let transform = go.transform;
 		let parent =
 			go instanceof GameObject ?
@@ -49,18 +51,35 @@ export default class Renderer {
 			);
 			this.context.translate(0, 0);
 		}
-		if (lineRenderer) {
+		if(color) {
 			this.context.translate(
-				transform.position.x - (parent.x / 2),
-				transform.position.y - (parent.y / 2)
+				transform.position.x - (transform.scale.x / 2) - (parent.x / 2),
+				transform.position.y - (transform.scale.y / 2) - (parent.y / 2)
 			);
-			// if (lineRenderer.getRotation()) {
-			// 	this.context.rotate((Math.PI / 180) * lineRenderer.getRotation());
-			// }
-			this.context.lineWidth = lineRenderer.getWidth() || 1;
-			this.context.lineTo(transform.position.x + lineRenderer.getLength(), transform.position.y + lineRenderer.getLength());
+			if(transform.rotation) {
+				this.context.rotate((Math.PI / 180) * transform.rotation);
+			}
+			this.context.fillStyle = color;
+			this.context.fillRect(
+				(-transform.scale.x / 2) + parent.x / 2,
+				(-transform.scale.y / 2) + parent.y / 2,
+				transform.scale.x,
+				transform.scale.y
+			);
 			this.context.translate(0, 0);
 		}
+		// if (lineRenderer) {
+		// 	this.context.translate(
+		// 		transform.position.x - (parent.x / 2),
+		// 		transform.position.y - (parent.y / 2)
+		// 	);
+		// 	// if (lineRenderer.getRotation()) {
+		// 	// 	this.context.rotate((Math.PI / 180) * lineRenderer.getRotation());
+		// 	// }
+		// 	this.context.lineWidth = lineRenderer.getWidth() || 1;
+		// 	this.context.lineTo(transform.position.x + lineRenderer.getLength(), transform.position.y + lineRenderer.getLength());
+		// 	this.context.translate(0, 0);
+		// }
 
 		go.children.forEach((node) => this.goTreeSearch(node));
 	}

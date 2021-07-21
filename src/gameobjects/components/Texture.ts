@@ -1,5 +1,6 @@
 import Component from './Component';
 export default class Texture extends Component {
+
 	constructor(public image: HTMLImageElement) {
 		super('Texture');
 	}

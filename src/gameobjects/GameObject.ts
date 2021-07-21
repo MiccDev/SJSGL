@@ -6,6 +6,7 @@ import Vector2 from '../utils/Vector2';
 import Layer from './components/Layer';
 import Sound from './components/Sound';
 import LineRenderer from './components/LineRenderer';
+import { Color } from '../utils/Color';
 
 type ComponentTypes = 'Texture' | 'Layer' | 'Sound' | 'LineRenderer';
 
@@ -14,12 +15,14 @@ export abstract class _GameObject {
 	visible: boolean;
 	components: Map<ComponentTypes, Texture | Layer | Sound | LineRenderer>;
 	transform: Transform;
+	color: Color;
 
 	constructor() {
 		this.children = [];
 		this.visible = true;
 		this.components = new Map();
 		this.transform = new Transform(new Vector2(0, 0), new Vector2(0, 0), 0);
+		this.color = Color.NONE;
 	}
 
 	addChild(child: GameObject): void {

@@ -15,6 +15,7 @@ import AudioLoader from './audio/AudioLoader';
 import Sound from './gameobjects/components/Sound';
 import LineTypes from './utils/LineTypes';
 import LineRenderer from './gameobjects/components/LineRenderer';
+import { Color, ColorUtils } from './utils/Color';
 
 type _Game = {
 	title: string,
@@ -106,5 +107,7 @@ export {
 	Sound,
 	AudioLoader,
 	LineRenderer,
-	LineTypes
+	LineTypes,
+	Color,
+	ColorUtils
 };
