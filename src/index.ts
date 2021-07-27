@@ -13,7 +13,6 @@ import Transform from './gameobjects/components/Transform';
 import Layer from './gameobjects/components/Layer';
 import AudioLoader from './audio/AudioLoader';
 import Sound from './gameobjects/components/Sound';
-import LineTypes from './utils/LineTypes';
 import LineRenderer from './gameobjects/components/LineRenderer';
 import { Color, ColorUtils } from './utils/Color';
 
@@ -107,7 +106,6 @@ export {
 	Sound,
 	AudioLoader,
 	LineRenderer,
-	LineTypes,
 	Color,
 	ColorUtils
 };

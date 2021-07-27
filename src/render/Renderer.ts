@@ -28,7 +28,7 @@ export default class Renderer {
 		if (!go.visible) return;
 		let texture = go.getComponent < Texture > ('Texture');
 		let color = go.color;
-		// let lineRenderer = go.getComponent < LineRenderer > ('LineRenderer');
+		let lineRenderer = go.getComponent < LineRenderer > ('LineRenderer');
 		let transform = go.transform;
 		let parent =
 			go instanceof GameObject ?
@@ -68,18 +68,18 @@ export default class Renderer {
 			);
 			this.context.translate(0, 0);
 		}
-		// if (lineRenderer) {
-		// 	this.context.translate(
-		// 		transform.position.x - (parent.x / 2),
-		// 		transform.position.y - (parent.y / 2)
-		// 	);
-		// 	// if (lineRenderer.getRotation()) {
-		// 	// 	this.context.rotate((Math.PI / 180) * lineRenderer.getRotation());
-		// 	// }
-		// 	this.context.lineWidth = lineRenderer.getWidth() || 1;
-		// 	this.context.lineTo(transform.position.x + lineRenderer.getLength(), transform.position.y + lineRenderer.getLength());
-		// 	this.context.translate(0, 0);
-		// }
+		if (lineRenderer) {
+			this.context.translate(
+				transform.position.x - (parent.x / 2),
+				transform.position.y - (parent.y / 2)
+			);
+			if (lineRenderer.rotation) {
+				this.context.rotate((Math.PI / 180) * lineRenderer.rotation);
+			}
+			this.context.lineWidth = lineRenderer.width || 1;
+			this.context.lineTo(transform.position.x + lineRenderer.length, transform.position.y + lineRenderer.length);
+			this.context.translate(0, 0);
+		}
 
 		go.children.forEach((node) => this.goTreeSearch(node));
 	}
