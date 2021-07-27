@@ -1,3 +1,4 @@
+import { game } from '..';
 import Vector2 from '../utils/Vector2';
 import KeyCode from './KeyCode';
 import MouseCode from './MouseCode';
@@ -7,7 +8,6 @@ export default class Input {
 	private mousePos: Vector2;
 
 	private keys: boolean[];
-
 	private canvas: HTMLCanvasElement;
 
 	constructor(canvas: HTMLCanvasElement) {
@@ -34,6 +34,7 @@ export default class Input {
 			'keydown',
 			(event) => {
 				_this.keys[event.keyCode] = true;
+				game.emit("KEY_DOWN", event.keyCode);
 			},
 			false
 		);
@@ -42,6 +43,7 @@ export default class Input {
 			'keyup',
 			(event) => {
 				_this.keys[event.keyCode] = false;
+				game.emit("KEY_UP", event.keyCode);
 			},
 			false
 		);
@@ -50,6 +52,7 @@ export default class Input {
 			'mousedown',
 			(event) => {
 				_this.mouseClick[event.button] = true;
+				game.emit("MOUSE_DOWN", event.button);
 			},
 			false
 		);
@@ -58,6 +61,7 @@ export default class Input {
 			'mouseup',
 			(event) => {
 				_this.mouseClick[event.button] = false;
+				game.emit("MOUSE_UP", event.button);
 			},
 			false
 		);
@@ -67,7 +71,8 @@ export default class Input {
 			(event) => {
 				var rect = _this.canvas.getBoundingClientRect();
 				_this.mousePos.x = event.clientX - rect.left;
-				_this.mousePos.x = event.clientY - rect.top;
+				_this.mousePos.y = event.clientY - rect.top;
+				game.emit("MOUSE_MOVE", _this.mousePos);
 			},
 			false
 		);

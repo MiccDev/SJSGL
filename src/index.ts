@@ -15,6 +15,7 @@ import AudioLoader from './audio/AudioLoader';
 import Sound from './gameobjects/components/Sound';
 import LineRenderer from './gameobjects/components/LineRenderer';
 import { Color, ColorUtils } from './utils/Color';
+import Events from './events/Events';
 
 type _Game = {
 	title: string,
@@ -34,6 +35,8 @@ class Game extends _GameObject {
 	private opts: _Game;
 	private updateMethod: Function;
 
+	private _events = {};
+
 	input: Input;
 	delta: number = 0;
 
@@ -52,7 +55,7 @@ class Game extends _GameObject {
 
 		this.context = this.canvas.getContext('2d') !;
 		this.input = new Input(this.canvas);
-		this.renderer = new Renderer(this.context, this);
+		this.renderer = new Renderer(this.context);
 
 		this.init();
 	}
@@ -75,6 +78,9 @@ class Game extends _GameObject {
 		this.delta = time - this.lastTime;
 
 		this.transform.scale = this.size;
+		document.title = this.projectTitle;
+		this.canvas.width = this.size.x;
+		this.canvas.height = this.size.y;
 
 		this.renderer.render();
 		this.treeSearch(this);
@@ -91,10 +97,57 @@ class Game extends _GameObject {
 		go.children.forEach((node) => this.treeSearch(node));
 	}
 
+	on(name: Events, listener: Function): void {
+		if(!this._events[name]) {
+			this._events[name] = [];
+		}
+
+		this._events[name].push(listener);
+	}
+
+	removeListener(name: Events, listenerToRemove: Function) {
+		if(!this._events[name]) {
+			throw new Error(`Cannot remove a listener. Event "${name}" does not exist.`);
+		}
+
+		const filterListeners = (listener) => listener !== listenerToRemove;
+
+		this._events[name] = this._events[name].filter(filterListeners);
+	}
+
+	emit(name: Events, data: any): void {
+		if(!this._events[name]) return;
+
+		const fireCallbacks = (callback) => {
+			callback(data);
+		}
+
+		this._events[name].forEach(fireCallbacks);
+	}
+
+	setTitle(title: string) {
+		this.projectTitle = title;
+	}
+
+	setSize(size: Vector2) {
+		this.size = size;
+	}
+
+	setUpdate(update: Function) {
+		this.updateMethod = update;
+	}
+
 }
 
+const game = new Game({
+	title: "Test Game",
+	size: new Vector2(512, 512),
+	fps: 60,
+	update: null!
+})
+
 export {
-	Game,
+	game,
 	GameObject,
 	Vector2,
 	KeyCode,

@@ -1,5 +1,5 @@
 import {
-	Game
+	game
 } from '..';
 import LineRenderer from '../gameobjects/components/LineRenderer';
 import Texture from '../gameobjects/components/Texture';
@@ -12,14 +12,14 @@ import { Color } from '../utils/Color';
 import Vector2 from '../utils/Vector2';
 
 export default class Renderer {
-	constructor(private context: CanvasRenderingContext2D, private game: Game) {}
+	constructor(private context: CanvasRenderingContext2D) {}
 
 	render(): void {
 		this.context.save();
-		var screenSize = this.game.size;
+		var screenSize = game.size;
 		this.context.clearRect(0, 0, screenSize.x, screenSize.y);
 
-		this.goTreeSearch(this.game);
+		this.goTreeSearch(game);
 
 		this.context.restore();
 	}

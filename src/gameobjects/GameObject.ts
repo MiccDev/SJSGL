@@ -7,6 +7,7 @@ import Layer from './components/Layer';
 import Sound from './components/Sound';
 import LineRenderer from './components/LineRenderer';
 import { Color } from '../utils/Color';
+import { game } from '..';
 
 type ComponentTypes = 'Texture' | 'Layer' | 'Sound' | 'LineRenderer';
 

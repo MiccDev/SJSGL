@@ -1,3 +1,4 @@
+import { game } from "../..";
 import Component from "./Component";
 
 export default class Sound extends Component {
@@ -27,6 +28,7 @@ export default class Sound extends Component {
 
     play(): void {
         this.sound.play();
+        game.emit("SOUND_PLAY", this);
     }
 
 }
